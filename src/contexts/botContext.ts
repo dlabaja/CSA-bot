@@ -3,8 +3,6 @@ import {
     Dependency,
     getBaseApplicationContext
 } from "ironbean";
-import {Configuration} from "../singletons/configuration";
-import {Logging} from "../singletons/logging";
 import {botInit} from "./botInit";
 
 class BotContext {
@@ -14,8 +12,9 @@ class BotContext {
         this._appContext = getBaseApplicationContext();
     }
     
-    public init() {
-        botInit(this._appContext)
+    public async getAndInitContext() {
+        await botInit(this._appContext);
+        return this._appContext;
     }
     
     public getBean<T>(dependency: Dependency<T>) {

@@ -1,7 +1,8 @@
-import {initBot} from "./src/bot";
+import {botContext} from "./src/contexts/botContext";
 
-function main() {
-    initBot()
+async function main() {
+    console.log("Starting the bot...");
+    await botContext.getAndInitContext();
 }
 
 main();
