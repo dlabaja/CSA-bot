@@ -5,7 +5,9 @@
   "main": "main.ts",
   "scripts": {
     "start": "npx ts-node main.ts",
-    "install-deps": "npm install"
+    "install-deps": "npm install",
+    "deploy-commands--TEST": "npx ts-node ./src/tools/deploy-commands/deploy-commands-test.ts",
+    "deploy-commands--GLOBAL": "npx ts-node ./src/tools/deploy-commands/deploy-commands-global.ts"
   },
   "keywords": [],
   "author": "",
