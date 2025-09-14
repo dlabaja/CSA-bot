@@ -11,6 +11,6 @@ export class EventManager {
     public init() {
         const client = this._botManager.client;
         client.once(Events.ClientReady, onClientReady)
-        client.once(Events.InteractionCreate, onInteractionCreate)
+        client.on(Events.InteractionCreate, onInteractionCreate)
     }
 }

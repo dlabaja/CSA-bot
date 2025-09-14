@@ -16,7 +16,7 @@ export class SlashCommand {
     constructor(settings: ISlashCommand) {
         this.name = settings.name;
         this.description = settings.description;
-        this.nsfw = settings.nsfw;
+        this.nsfw = settings.nsfw || false;
         this.callback = settings.callback;
     }
 }
