@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npx ts-node main.ts",
     "install-deps": "npm install",
+    "lint": "npx tsc --noEmit",
     "deploy-commands--TEST": "npx ts-node ./src/tools/deploy-commands/deploy-commands-test.ts",
     "deploy-commands--GLOBAL": "npx ts-node ./src/tools/deploy-commands/deploy-commands-global.ts"
   },

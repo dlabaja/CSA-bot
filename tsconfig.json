@@ -17,6 +17,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true // imports without asterisk *
-  }
+    "esModuleInterop": true, // imports without asterisk *
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules"]
 }
