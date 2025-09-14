@@ -15,7 +15,7 @@ export class BotManager {
         return this._client;
     }
 
-    public async init() {
+    public async login() {
         await this._client.login(this._configuration.token);
         console.log("Login successful")
     }
