@@ -11,8 +11,8 @@ export class SlashCommandsManager {
         this._slashCommands = commands;
     }
 
-    get slashCommands(): ISlashCommand[] {
-        return this._slashCommands;
+    get slashCommands(): SlashCommand[] {
+        return this._slashCommands.map(x => new SlashCommand(x));
     }
 
     public getCommand(name: string): SlashCommand | null {
