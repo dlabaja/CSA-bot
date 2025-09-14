@@ -1,10 +1,10 @@
 import {ClientEvents, MessageFlags} from "discord.js";
-import {getBean} from "../contexts/botContext";
 import {SlashCommandsManager} from "../singletons/slash-commands-manager";
+import {context} from "../contexts/context";
 
 export async function onInteractionCreate(...props: ClientEvents["interactionCreate"]) {
     const [interaction] = props;
-    const slashCommandManager = getBean(SlashCommandsManager);
+    const slashCommandManager = context.getBean(SlashCommandsManager);
     
     if (!interaction.isChatInputCommand()) {
         return;
