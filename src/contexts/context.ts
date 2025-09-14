@@ -2,14 +2,19 @@ import {ApplicationContext, Dependency, getBaseApplicationContext} from "ironbea
 
 export abstract class Context {
     protected readonly _appContext: ApplicationContext;
+    private _initialized: boolean;
 
     constructor() {
         this._appContext = getBaseApplicationContext();
     }
 
     public async initContext(): Promise<void> {
+        if (this._initialized) {
+            return;
+        }
         setContext(this)
         await this.init();
+        this._initialized = true;
     }
     
     protected abstract init(): Promise<void>;
@@ -36,6 +41,10 @@ export const context: Context = new Proxy({} as Context, {
         return true;
     }
 });
+
+export async function initContext(ctx: Context) {
+    await ctx.initContext()
+}
 
 function setContext(ctx: Context) {
     _context = ctx;

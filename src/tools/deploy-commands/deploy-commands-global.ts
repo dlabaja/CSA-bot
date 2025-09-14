@@ -1,11 +1,11 @@
 import {REST, Routes} from "discord.js";
 import {ConfigurationManager} from "../../singletons/configuration-manager";
 import {SlashCommandsManager} from "../../singletons/slash-commands-manager";
-import {context} from "../../contexts/context";
+import {context, initContext} from "../../contexts/context";
 import {ScriptContext} from "../../contexts/scriptContext";
 
 export async function deployCommandsGlobal() {
-    await new ScriptContext().initContext();
+    await initContext(new ScriptContext());
     const configuration = context.getBean(ConfigurationManager);
     const commandsManager = context.getBean(SlashCommandsManager);
 
