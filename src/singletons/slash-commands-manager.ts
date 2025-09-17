@@ -1,18 +1,17 @@
-import {ISlashCommand, SlashCommand} from "../data/slash-command";
-import {commands} from "../database/commands";
+import {SlashCommand} from "../data/slash-command";
 import {component} from "ironbean";
 import {SlashCommandBuilder} from "discord.js";
 
 @component
 export class SlashCommandsManager {
-    private readonly _slashCommands: ISlashCommand[];
+    private readonly _slashCommands: SlashCommand[];
 
     constructor() {
-        this._slashCommands = commands;
+        this._slashCommands = [];
     }
 
     get slashCommands(): SlashCommand[] {
-        return this._slashCommands.map(x => new SlashCommand(x));
+        return this._slashCommands;
     }
 
     public getCommand(name: string): SlashCommand | null {

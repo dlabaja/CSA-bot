@@ -65,15 +65,24 @@ export class LoggingManager {
         return `[${timestampPart}][${typePart}] ${msg}`
     }
     
+    private dataToString(data: never[]) {
+        return data.map((d) => {
+            if (typeof d === "object") {
+                return JSON.stringify(d)
+            }
+            return d;
+        }).join(" ")
+    }
+    
     public remapToConsole() {
         console.log = (...data: never[]) => {
-            this.log([...data].join(" "));
+            this.log(this.dataToString(data));
         };
         console.warn = (...data: never[]) => {
-            this.warn([...data].join(" "));
+            this.warn(this.dataToString(data));
         };
         console.error = (...data: never[]) => {
-            this.error([...data].join(" "));
+            this.error(this.dataToString(data));
         };
     }
     

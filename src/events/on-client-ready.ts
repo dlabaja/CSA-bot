@@ -1,6 +1,12 @@
-import {ClientEvents} from "discord.js";
+import {ClientEvents, Events} from "discord.js";
+import {BaseEvent} from "./base-event";
+import {ClientEvent} from "../decorators/client-event-decorator";
+import {EventDuration} from "../data/client-event";
 
-export function onClientReady(...props: ClientEvents["clientReady"]) {
-    const [client] = props;
-    console.log("Bot started")
+@ClientEvent(Events.ClientReady, EventDuration.ONCE)
+export class OnClientReady extends BaseEvent<"clientReady"> {
+    public callback(...args: ClientEvents["clientReady"]): void {
+        const [client] = args;
+        console.log("Bot started")
+    }
 }

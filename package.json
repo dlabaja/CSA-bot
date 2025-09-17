@@ -16,7 +16,8 @@
   "dependencies": {
     "discord.js": "^14.22.1",
     "dotenv": "^17.2.2",
-    "ironbean": "^1.0.22"
+    "ironbean": "^1.0.22",
+    "ts-morph": "^27.0.0"
   },
   "devDependencies": {
     "eslint": "^9.35.0",

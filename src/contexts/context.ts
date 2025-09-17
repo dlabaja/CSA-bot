@@ -8,13 +8,13 @@ export abstract class Context {
         this._appContext = getBaseApplicationContext();
     }
 
-    public async initContext(): Promise<void> {
+    public async initContext(): Promise<Context> {
         if (this._initialized) {
-            return;
+            return this;
         }
-        setContext(this)
         await this.init();
         this._initialized = true;
+        return this;
     }
     
     protected abstract init(): Promise<void>;
@@ -22,30 +22,4 @@ export abstract class Context {
     public getBean<T>(dependency: Dependency<T>) {
         return this._appContext.getBean<T>(dependency)
     }
-}
-
-let _context: Context | null = null;
-
-export const context: Context = new Proxy({} as Context, {
-    get(_, prop) {
-        if (!_context) throw new Error("Context not initialized");
-        const value = (_context as any)[prop];
-        if (typeof value === "function") {
-            return value.bind(_context);
-        }
-        return value;
-    },
-    set(_, prop, value) {
-        if (!_context) throw new Error("Context not initialized");
-        (_context as any)[prop] = value;
-        return true;
-    }
-});
-
-export async function initContext(ctx: Context) {
-    await ctx.initContext()
-}
-
-function setContext(ctx: Context) {
-    _context = ctx;
 }
