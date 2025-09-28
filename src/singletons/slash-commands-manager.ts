@@ -19,7 +19,7 @@ export class SlashCommandsManager {
         if (!command) {
             return null;
         }
-        return new SlashCommand(command);
+        return command;
     }
 
     public getCommandsDataJson() {
