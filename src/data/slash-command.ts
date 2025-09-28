@@ -7,7 +7,7 @@ export interface ISlashCommandChoice<T> {
 }
 
 interface ISlashCommandOptionBase {
-    name: string;
+    name: Lowercase<string>;
     description: string;
 }
 
@@ -47,19 +47,19 @@ export type SlashCommandOption =
     })
 
 export interface ISlashCommand {
-    name: string;
+    name: Lowercase<string>;
     options: SlashCommandOption[]
     description: string;
     nsfw: boolean;
-    callback: (interaction: RepliableInteraction) => Promise<void>;
+    callback: (interaction: RepliableInteraction, command: SlashCommand) => Promise<void>;
 }
 
 export class SlashCommand {
-    public name: string;
+    public name: Lowercase<string>;
     public options: SlashCommandOption[];
     public description: string;
     public nsfw: boolean;
-    public callback: (interaction: RepliableInteraction) => Promise<void>;
+    public callback: (interaction: RepliableInteraction, command: this) => Promise<void>;
     
     constructor(settings: ISlashCommand) {
         this.name = settings.name;
