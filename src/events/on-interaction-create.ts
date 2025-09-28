@@ -23,7 +23,7 @@ export class OnInteractionCreate extends BaseEvent<"interactionCreate"> {
         }
 
         try {
-            await command.callback(interaction);
+            await command.callback(interaction, command);
         } catch (error) {
             console.error(error);
             if (interaction.replied || interaction.deferred) {
