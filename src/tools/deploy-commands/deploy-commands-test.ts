@@ -11,9 +11,11 @@ export async function deployCommandsTest() {
     const rest = new REST().setToken(configuration.token);
     try {
         console.log("Refreshing slash commands for TEST");
+        const body = commandsManager.getCommandsDataJson();
+        console.log(body)
         await rest.put(
             Routes.applicationGuildCommands(configuration.clientId, configuration.testGuildId),
-            { body: commandsManager.getCommandsDataJson() },
+            { body: body },
         );
         console.log("Refresh successful");
     } 

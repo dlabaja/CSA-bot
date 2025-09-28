@@ -1,6 +1,7 @@
 import {ApplicationContext} from "ironbean";
 import {ConfigurationManager} from "../singletons/configuration-manager";
 import {PathManager} from "../singletons/path-manager";
+import {DecoratorManager} from "../singletons/decorator-manager";
 
 export class Init {
     protected readonly _appContext: ApplicationContext;
@@ -13,5 +14,6 @@ export class Init {
         const appContext = this._appContext;
         appContext.getBean(ConfigurationManager).init();
         await appContext.getBean(PathManager).init();
+        await appContext.getBean(DecoratorManager).init();
     }
 }
