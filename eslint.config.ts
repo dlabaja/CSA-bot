@@ -1,6 +1,6 @@
 import globals from "globals";
 import tseslint from "typescript-eslint";
-import { defineConfig } from "eslint/config";
+import {defineConfig, globalIgnores} from "eslint/config";
 
 export default defineConfig([
     tseslint.configs.recommended,
@@ -17,4 +17,5 @@ export default defineConfig([
             "@typescript-eslint/no-explicit-any": "warn"
         }
     },
+    globalIgnores(["src/generated/prisma"])
 ]);

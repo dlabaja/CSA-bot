@@ -20,5 +20,6 @@
     "esModuleInterop": true, // imports without asterisk *
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/generated/prisma"]
 }
