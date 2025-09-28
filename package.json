@@ -7,6 +7,8 @@
     "start": "npx ts-node main.ts",
     "install-deps": "npm install",
     "lint": "npx tsc --noEmit",
+    "prisma-generate": "npx prisma generate --no-hints",
+    "prisma-migrate": "npx prisma migrate dev --name init",
     "deploy-commands--TEST": "npx ts-node ./src/tools/deploy-commands/deploy-commands-test.ts",
     "deploy-commands--GLOBAL": "npx ts-node ./src/tools/deploy-commands/deploy-commands-global.ts"
   },
@@ -14,9 +16,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^6.16.2",
     "discord.js": "^14.22.1",
     "dotenv": "^17.2.2",
     "ironbean": "^1.0.22",
+    "prisma": "^6.16.2",
     "ts-morph": "^27.0.0"
   },
   "devDependencies": {
@@ -24,5 +28,13 @@
     "globals": "^16.4.0",
     "jiti": "^2.5.1",
     "typescript-eslint": "^8.43.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dlabaja/CSA-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dlabaja/CSA-bot/issues"
+  },
+  "homepage": "https://github.com/dlabaja/CSA-bot#readme"
 }
