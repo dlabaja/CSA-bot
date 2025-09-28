@@ -1,9 +1,9 @@
 import { Project } from "ts-morph";
 import {ClientEvent} from "../decorators/client-event-decorator";
-import {SlashCommand} from "../decorators/slash-command-decorator";
+import {RegisterSlashCommand} from "../decorators/register-slash-command";
 import {component} from "ironbean";
 
-export const decorators: string[] = [ClientEvent.name, SlashCommand.name]
+export const decorators: string[] = [ClientEvent.name, RegisterSlashCommand.name]
 
 interface IDecorator {
     name: string;

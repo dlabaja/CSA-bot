@@ -2,9 +2,12 @@ import {RepliableInteraction} from "discord.js";
 import {SlashCommandsManager} from "../../../singletons/slash-commands-manager";
 import {BaseSlashCommand} from "../base-slash-command";
 import {autowired} from "ironbean";
-import {SlashCommand} from "../../../decorators/slash-command-decorator";
+import {RegisterSlashCommand} from "../../../decorators/register-slash-command";
 
-@SlashCommand("help", "Lists all commands")
+@RegisterSlashCommand({
+    name: "help",
+    description: "Lists all commands"
+})
 export class HelpCommand extends BaseSlashCommand {
     @autowired private _slashCommandManager: SlashCommandsManager;
     
