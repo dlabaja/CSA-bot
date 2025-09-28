@@ -1,6 +1,6 @@
 import {SlashCommand} from "../data/slash-command";
 import {component} from "ironbean";
-import {SlashCommandBuilder} from "discord.js";
+import {SlashCommandConverter} from "../converters/slash-command-converter";
 
 @component
 export class SlashCommandsManager {
@@ -21,18 +21,10 @@ export class SlashCommandsManager {
         }
         return new SlashCommand(command);
     }
-    
-    public getCommandDataJson(command: SlashCommand) {
-        return new SlashCommandBuilder()
-            .setName(command.name)
-            .setDescription(command.description)
-            .setNSFW(command.nsfw)
-            .toJSON()
-    }
 
     public getCommandsDataJson() {
         return this._slashCommands.map(cmd => {
-            return this.getCommandDataJson(new SlashCommand(cmd))
+            return new SlashCommandConverter().toJson(cmd);
         })
     }
 }
