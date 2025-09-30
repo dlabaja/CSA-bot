@@ -3,6 +3,7 @@ import {LogColor, LogType} from "../enums/logging.enum";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import {PathManager} from "./path-manager";
+import util from "util";
 
 @component
 export class LoggingManager {
@@ -68,7 +69,7 @@ export class LoggingManager {
     private dataToString(data: never[]) {
         return data.map((d) => {
             if (typeof d === "object") {
-                return JSON.stringify(d)
+                return util.inspect(d, { depth: null, colors: true });
             }
             return d;
         }).join(" ")
