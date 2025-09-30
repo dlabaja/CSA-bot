@@ -1,4 +1,4 @@
-import {RepliableInteraction} from "discord.js";
+import {ChatInputCommandInteraction} from "discord.js";
 import {BaseSlashCommand} from "../base-slash-command";
 import {RegisterSlashCommand} from "../../../decorators/register-slash-command";
 
@@ -7,7 +7,7 @@ import {RegisterSlashCommand} from "../../../decorators/register-slash-command";
     description: "Replies with Pong!"
 })
 export class PingCommand extends BaseSlashCommand {
-    async execute(interaction: RepliableInteraction): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         await interaction.reply("Pong!")
     }
 }

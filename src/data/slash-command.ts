@@ -1,4 +1,4 @@
-import {RepliableInteraction} from "discord.js";
+import {PermissionsBitField, ChatInputCommandInteraction} from "discord.js";
 import {SlashCommandOptionType} from "../enums/slash-command-option-type.enum";
 
 export interface ISlashCommandChoice<T> {
@@ -9,6 +9,7 @@ export interface ISlashCommandChoice<T> {
 interface ISlashCommandOptionBase {
     name: Lowercase<string>;
     description: string;
+    permissions?: PermissionsBitField;
 }
 
 export type SlashCommandOption = 
@@ -51,21 +52,43 @@ export interface ISlashCommand {
     options: SlashCommandOption[]
     description: string;
     nsfw: boolean;
-    callback: (interaction: RepliableInteraction, command: SlashCommand) => Promise<void>;
+    callback: (interaction: ChatInputCommandInteraction, command: SlashCommand) => Promise<void>;
+    permissions?: PermissionsBitField;
 }
+
+type OptionWithNested = SlashCommandOption & { options?: SlashCommandOption[] };
 
 export class SlashCommand {
     public name: Lowercase<string>;
     public options: SlashCommandOption[];
     public description: string;
     public nsfw: boolean;
-    public callback: (interaction: RepliableInteraction, command: this) => Promise<void>;
-    
+    public callback: (interaction: ChatInputCommandInteraction, command: this) => Promise<void>;
+    public permissions?: PermissionsBitField;
+    private _subcommandPermissions?: Record<string, PermissionsBitField | undefined>;
+
     constructor(settings: ISlashCommand) {
         this.name = settings.name;
         this.options = settings.options;
         this.description = settings.description;
         this.nsfw = settings.nsfw;
         this.callback = settings.callback;
+        this.permissions = settings.permissions;
+    }
+
+    public getSubcommandPermissions(): Record<string, PermissionsBitField | undefined> {
+        if (!this._subcommandPermissions) {
+            this._subcommandPermissions = Object.fromEntries(
+                this._flattenOptions(this.options).map(o => [o.name, o.permissions] as const)
+            );
+        }
+        return this._subcommandPermissions;
+    }
+    
+    private _flattenOptions(options: OptionWithNested[]): OptionWithNested[] {
+        return options.flatMap(opt => [
+            opt,
+            ...(opt.options ? this._flattenOptions(opt.options) : [])
+        ]);
     }
 }
