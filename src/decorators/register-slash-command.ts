@@ -23,7 +23,7 @@ class SlashCommandDecorator {
                 description: description,
                 callback: async (interaction) => {
                     const instance = new target();
-                    return instance.execute(interaction, data);
+                    return instance.executeCommand(interaction, data);
                 },
                 nsfw: nsfw || false
             })

@@ -84,6 +84,9 @@ export class SlashCommandConverter {
             .setName(command.name)
             .setDescription(command.description)
             .setNSFW(command.nsfw)
+        if (command.permissions) {
+            builder.setDefaultMemberPermissions(command.permissions.bitfield)
+        }
         this._addOptions(builder, command.options);
         return builder.toJSON();
     }
