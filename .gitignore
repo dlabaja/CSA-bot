@@ -133,3 +133,5 @@ dist
 # db
 database
 /src/generated/prisma
+
+config.json

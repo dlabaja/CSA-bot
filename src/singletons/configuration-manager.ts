@@ -1,13 +1,23 @@
 import dotenv from "dotenv";
 import {component} from "ironbean";
 import process from "node:process";
+import config from "../../config.json"
 
 @component
 export class ConfigurationManager {
     private _token = "";
     private _clientId = "";
     private _testGuildId = "";
+    private _regionRoleIds: number[] = []
 
+    public init() {
+        dotenv.config({ quiet: true });
+        this._token = process.env.TOKEN || "";
+        this._clientId = config.CLIENT_ID || "";
+        this._testGuildId = config.TEST_GUILD_ID || "";
+        this._regionRoleIds = config.REGION_ROLE_IDS || [];
+    }
+    
     get token(): string {
         return this._token;
     }
@@ -20,10 +30,7 @@ export class ConfigurationManager {
         return this._testGuildId;
     }
 
-    public init() {
-        dotenv.config({ quiet: true });
-        this._token = process.env.TOKEN || "";
-        this._clientId = process.env.CLIENT_ID || "";
-        this._testGuildId = process.env.TEST_GUILD_ID || "";
+    get regionRoleIds(): number[] {
+        return this._regionRoleIds;
     }
 }
