@@ -1,5 +1,5 @@
 {
-  "CLIENT_ID": "",
-  "TEST_GUILD_ID": "",
-  "REGION_ROLE_IDS": []
+  "CLIENT_ID": "id vašeho bota, najdete na developer portálu",
+  "TEST_GUILD_ID": "id serveru, na kterém budete testovat příkazy (nepovinné)",
+  "REGION_ROLE_IDS": ["číselné roleIds pro krajské role (olomoucký, pražský,...)"]
 }

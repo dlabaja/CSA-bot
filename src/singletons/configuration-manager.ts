@@ -13,6 +13,10 @@ export class ConfigurationManager {
     public init() {
         dotenv.config({ quiet: true });
         this._token = process.env.TOKEN || "";
+        if (!this._token) {
+            console.error("Bot token missing, provide one in the .env file");
+            process.exit(1)
+        }  
         this._clientId = config.CLIENT_ID || "";
         this._testGuildId = config.TEST_GUILD_ID || "";
         this._regionRoleIds = config.REGION_ROLE_IDS || [];
