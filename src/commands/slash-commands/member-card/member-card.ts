@@ -146,6 +146,13 @@ export class MemberCard extends BaseSlashCommand {
             x: 699,
             y: 419 + yOffset + 25
         })
+        await img.addImage({
+            url: interaction.user.avatarURL() || interaction.user.defaultAvatarURL,
+            x: 40,
+            y: 507 - 300,
+            w: 200,
+            h: 200
+        })
         return img;
     }
 

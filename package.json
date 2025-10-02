@@ -22,6 +22,7 @@
     "dotenv": "^17.2.2",
     "ironbean": "^1.0.22",
     "prisma": "^6.16.2",
+    "sharp": "^0.34.4",
     "ts-morph": "^27.0.0"
   },
   "devDependencies": {
