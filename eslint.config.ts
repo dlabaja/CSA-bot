@@ -14,7 +14,8 @@ export default defineConfig([
             }],
             "@typescript-eslint/ban-ts-comment": "off",
             "@typescript-eslint/no-unused-vars": "warn",
-            "@typescript-eslint/no-explicit-any": "warn"
+            "@typescript-eslint/no-explicit-any": "warn",
+            "@typescript-eslint/no-unused-expressions": "off"
         }
     },
     globalIgnores(["src/generated/prisma"])

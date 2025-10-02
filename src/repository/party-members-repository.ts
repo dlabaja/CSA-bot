@@ -14,12 +14,11 @@ export class PartyMembersRepository {
         return data ? PartyMemberConverter.toClient(data) : null;
     }
     
-    public async addPartyMember(data: IPartyMember): Promise<void> {
+    public async addPartyMember(data: Omit<IPartyMember, "partyNumber">): Promise<void> {
         await this._databaseManager.db.party_members.upsert({
             where: {uuid: data.uuid},
             update: {},
             create: {
-                party_number: data.partyNumber,
                 uuid: data.uuid,
                 approver_uuid: data.approverUuid,
                 date: data.date
