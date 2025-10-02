@@ -1,10 +1,18 @@
-import {Canvas, createCanvas, Image, loadImage, CanvasRenderingContext2D} from "canvas";
+import {Canvas, createCanvas, Image, loadImage, CanvasRenderingContext2D, registerFont} from "canvas";
 import {AttachmentBuilder} from "discord.js";
+import {PathManager} from "../../singletons/path-manager";
 
 type MimeType = "image/png" | "image/jpeg" | "application/pdf"
 
 export enum FontName {
-    Arial
+    Arial = "Arial",
+    Pacifico = "Pacifico"
+}
+
+export enum TextAlign {
+    LEFT = "left",
+    CENTER = "center",
+    RIGHT = "right"
 }
 
 export enum FontWeight {
@@ -17,10 +25,13 @@ export interface IImageText {
     fontSize: number;
     font?: FontName;
     fontWeight?: FontWeight;
+    textAlign?: TextAlign;
     color?: string;
     x: number;
     y: number;
 }
+
+registerFont(PathManager.getPath(__dirname, "./fonts/Pacifico-Regular.ttf"), { family: "Pacifico" });
 
 export class ImageBuilder {
     private _img: Image;
@@ -36,8 +47,9 @@ export class ImageBuilder {
     }
     
     public addText(args: IImageText) {
-        const {text, fontSize, fontWeight, font, color, x, y} = args;
-        this._ctx.font = `${fontWeight || FontWeight.REGULAR} ${fontSize}px ${font ? this._getFontName(font) : "Arial"}`;
+        const {text, fontSize, fontWeight, textAlign, font, color, x, y} = args;
+        this._ctx.font = `${fontWeight || FontWeight.REGULAR} ${fontSize}px ${font || "Arial"}`;
+        this._ctx.textAlign = textAlign || "left"
         this._ctx.fillStyle = color || "#fff"
         this._ctx.fillText(text, x, y)
     }
@@ -55,12 +67,5 @@ export class ImageBuilder {
     
     public toAttachment(mimeType: MimeType, filename: string) {
         return new AttachmentBuilder(this.toBuffer(mimeType), {name: filename})
-    }
-    
-    private _getFontName(font: FontName) {
-        switch (font) {
-            case FontName.Arial:
-                return "Arial"
-        }
     }
 }
