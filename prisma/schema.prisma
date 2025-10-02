@@ -12,6 +12,8 @@ datasource db {
 }
 
 model party_members {
-  id        Int @id @default(autoincrement())
-  uuid      BigInt @unique
+  party_number  Int      @id @default(autoincrement())
+  uuid          BigInt   @unique
+  approver_uuid BigInt
+  date          DateTime
 }
