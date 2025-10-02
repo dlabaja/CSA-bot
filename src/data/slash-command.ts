@@ -14,28 +14,28 @@ interface ISlashCommandOptionBase {
 export type SlashCommandOption = 
     | (ISlashCommandOptionBase & {
         type: SlashCommandOptionType.STRING;
-        required?: boolean;
+        optional?: boolean;
         choices?: ISlashCommandChoice<string>[];
         maxLength?: number;
         minLength?: number;
     }) 
     | (ISlashCommandOptionBase & {
         type: SlashCommandOptionType.NUMBER;
-        required?: boolean;
+        optional?: boolean;
         choices?: ISlashCommandChoice<string>[];
         maxValue?: number;
         minValue?: number; 
     })
     | (ISlashCommandOptionBase & {
         type: SlashCommandOptionType.INTEGER;
-        required?: boolean;
+        optional?: boolean;
         choices?: ISlashCommandChoice<string>[];
         maxValue?: number;
         minValue?: number;
     })
     | (ISlashCommandOptionBase & {
         type: SlashCommandOptionType.BOOLEAN;
-        required?: boolean;
+        optional?: boolean;
     })
     | (ISlashCommandOptionBase & {
         type: SlashCommandOptionType.SUB_COMMAND;
@@ -44,7 +44,7 @@ export type SlashCommandOption =
     })
     | (ISlashCommandOptionBase & {
         type: SlashCommandOptionType.USER;
-        required?: boolean;
+        optional?: boolean;
     })
 
 export interface ISlashCommand {

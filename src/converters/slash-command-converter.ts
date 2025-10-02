@@ -13,7 +13,7 @@ export class SlashCommandConverter {
         optionBuilder
             .setName(option.name)
             .setDescription(option.description)
-            .setRequired(option.required || false);
+            .setRequired(option.optional || true);
         if (option.choices) {
             optionBuilder.addChoices(option.choices)
         }
@@ -24,28 +24,28 @@ export class SlashCommandConverter {
         return optionBuilder
             .setName(option.name)
             .setDescription(option.description)
-            .setRequired(option.required || false);
+            .setRequired(option.optional || true);
     }
 
     private _addNumberOption(optionBuilder: SlashCommandNumberOption, option: Extract<SlashCommandOption, { type: SlashCommandOptionType.NUMBER }>) {
         return optionBuilder
             .setName(option.name)
             .setDescription(option.description)
-            .setRequired(option.required || false);
+            .setRequired(option.optional || true);
     }
 
     private _addBooleanOption(optionBuilder: SlashCommandBooleanOption, option: Extract<SlashCommandOption, { type: SlashCommandOptionType.BOOLEAN }>) {
         return optionBuilder
             .setName(option.name)
             .setDescription(option.description)
-            .setRequired(option.required || false);
+            .setRequired(option.optional || true);
     }
 
     private _addUserOption(optionBuilder: SlashCommandUserOption, option: Extract<SlashCommandOption, { type: SlashCommandOptionType.USER }>) {
         return optionBuilder
             .setName(option.name)
             .setDescription(option.description)
-            .setRequired(option.required || false);
+            .setRequired(option.optional || true);
     }
     
     private _addSubcommand(optionBuilder: SlashCommandSubcommandBuilder, option: Extract<SlashCommandOption, { type: SlashCommandOptionType.SUB_COMMAND }>) {
