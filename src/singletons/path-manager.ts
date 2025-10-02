@@ -13,6 +13,10 @@ export class PathManager {
         await this.createFolderIfMissing(PathManager.DB_PATH)
     }
     
+    public static getPath(dirname: string, relativePath: string) {
+        return path.join(dirname, relativePath)
+    }
+    
     private async createFolderIfMissing(dirPath: string) {
         await fs.promises.mkdir(dirPath, { recursive: true });
     }
