@@ -1,6 +1,7 @@
 import {LoggingManager} from "../singletons/logging-manager";
 import {EventManager} from "../singletons/event-manager";
 import {Init} from "./init";
+import {DecoratorManager} from "../singletons/decorator-manager";
 
 export class BotInit extends Init {
     public async init() {
@@ -14,7 +15,9 @@ export class BotInit extends Init {
         const logging = appContext.getBean(LoggingManager);
         logging.init(5);
         logging.remapToConsole();
-        
+
+        await appContext.getBean(DecoratorManager).init();
+
         appContext.getBean(EventManager).init();
     }
 }
