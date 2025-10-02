@@ -1,7 +1,7 @@
 import {REST, Routes} from "discord.js";
 import {ConfigurationManager} from "../../singletons/configuration-manager";
 import {SlashCommandsManager} from "../../singletons/slash-commands-manager";
-import {ScriptContext} from "../../contexts/scriptContext";
+import {ScriptContext} from "../../contexts/script-context";
 
 export async function deployCommandsGlobal() {
     const context = await new ScriptContext().initContext();

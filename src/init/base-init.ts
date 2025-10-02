@@ -2,7 +2,7 @@ import {ApplicationContext} from "ironbean";
 import {ConfigurationManager} from "../singletons/configuration-manager";
 import {PathManager} from "../singletons/path-manager";
 
-export class Init {
+export class BaseInit {
     protected readonly _appContext: ApplicationContext;
     
     constructor(appContext: ApplicationContext) {

@@ -1,6 +1,6 @@
 import {ApplicationContext, Dependency, getBaseApplicationContext} from "ironbean";
 
-export abstract class Context {
+export abstract class BaseContext {
     protected readonly _appContext: ApplicationContext;
     private _initialized: boolean;
 
@@ -8,7 +8,7 @@ export abstract class Context {
         this._appContext = getBaseApplicationContext();
     }
 
-    public async initContext(): Promise<Context> {
+    public async initContext(): Promise<BaseContext> {
         if (this._initialized) {
             return this;
         }

@@ -1,9 +1,9 @@
 import {LoggingManager} from "../singletons/logging-manager";
 import {EventManager} from "../singletons/event-manager";
-import {Init} from "./init";
+import {BaseInit} from "./base-init";
 import {DecoratorManager} from "../singletons/decorator-manager";
 
-export class BotInit extends Init {
+export class BotInit extends BaseInit {
     public async init() {
         await super.init();
         await this._init();
