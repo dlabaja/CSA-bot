@@ -1,25 +1,25 @@
 import {ChatInputCommandInteraction} from "discord.js";
-import {SlashCommand} from "../../../../data/slash-command";
 import {autowired} from "ironbean";
 import {ConfigurationManager} from "../../../../singletons/configuration-manager";
 import {PartyMembersRepository} from "../../../../repository/party-members-repository";
 import {FontName, FontWeight, ImageBuilder, TextAlign} from "../../../../utils/image-builder/image-builder";
 import {PathManager} from "../../../../singletons/path-manager";
 import {formatDateTime} from "../../../../utils/date-time";
+import {PartyMember} from "../../../../data/repository/party-member";
 
 export class MemberCardView {
-    @autowired _configurationManager: ConfigurationManager;
-    @autowired _partyMembersRepository: PartyMembersRepository;
+    @autowired private _configurationManager: ConfigurationManager;
+    @autowired private _partyMembersRepository: PartyMembersRepository;
     
-    public async execute(interaction: ChatInputCommandInteraction, command: SlashCommand) {
+    public async execute(interaction: ChatInputCommandInteraction) {
         await interaction.deferReply();
         const partyMemberInfo = await this._partyMembersRepository.getPartyMember(BigInt(interaction.user.id));
         if (!partyMemberInfo) {
-            await interaction.editReply("Ještě nejsi členem strany")
+            await interaction.editReply("Ještě nejsi členem strany. Někdo tě musí přidat příkazem **/member-card add**")
             return;
         }
         
-        const img = await this._generateImg(interaction)
+        const img = await this._generateImg(interaction, partyMemberInfo)
         const attachment = img.toAttachment("image/png", "member-card.png");
 
         await interaction.editReply({
@@ -28,11 +28,12 @@ export class MemberCardView {
         })
     }
     
-    private async _generateImg(interaction: ChatInputCommandInteraction) {
+    private async _generateImg(interaction: ChatInputCommandInteraction, data: PartyMember) {
         const img = new ImageBuilder();
         await img.load(PathManager.getPath(__dirname, "./member-card.png"))
         
         const member = await interaction.guild?.members.fetch(interaction.user.id);
+        const approver = await interaction.guild?.members.fetch(data.approverUuid.toString())
         const regionRoles = member?.roles.cache.filter(x => this._configurationManager.regionRoleIds.includes(Number(x.id)))
         const color = "#363636";
         const fontWeight = FontWeight.SEMIBOLD;
@@ -64,16 +65,16 @@ export class MemberCardView {
             x: 519 + xOffset,
             y: 79
         })
-        img.addText({
-            text: member?.joinedAt ? formatDateTime(member?.joinedAt) : "?",
+        member && img.addText({
+            text: member.joinedAt ? formatDateTime(member.joinedAt) : "?",
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
             x: 280,
             y: 206 + yOffset
         })
-        img.addText({
-            text: regionRoles ? regionRoles.map(x => x.name)[0] : "",
+        regionRoles && img.addText({
+            text: regionRoles.map(x => x.name)[0],
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
@@ -81,7 +82,7 @@ export class MemberCardView {
             y: 270 + yOffset
         })
         img.addText({
-            text: formatDateTime(new Date()),
+            text: formatDateTime(data.date),
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
@@ -89,7 +90,7 @@ export class MemberCardView {
             y: 366 + yOffset
         })
         img.addText({
-            text: "1",
+            text: data.partyNumber.toString(),
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
@@ -97,22 +98,22 @@ export class MemberCardView {
             y: 432 + yOffset
         })
         img.addText({
-            text: interaction.options.get("pronouns")?.value?.toString() || "",
+            text: interaction.options.get("pronouns")!.value!.toString() || "",
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
             x: 615,
             y: 206 + yOffset
         })
-        img.addText({
-            text: interaction.user.displayName,
-            fontSize: 48,
+        approver && img.addText({
+            text: approver.displayName || "",
+            fontSize: 48 - (approver.displayName.length * 2),
             fontWeight: fontWeight,
             textAlign: TextAlign.CENTER,
             font: FontName.Pacifico,
             color: color,
             x: 699,
-            y: 419 + yOffset + 25
+            y: 419 + yOffset + 25 - (approver.displayName.length * 2)
         })
         await img.addImage({
             url: interaction.user.avatarURL() || interaction.user.defaultAvatarURL,

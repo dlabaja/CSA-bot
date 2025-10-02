@@ -10,10 +10,10 @@ export abstract class BaseSlashCommand {
             await interaction.reply("Insufficient permissions");
             return;
         }
-        await this.execute(interaction, command)
+        await this.execute(interaction)
     }
     
-    protected abstract execute(interaction: ChatInputCommandInteraction, command: SlashCommand): Promise<void>;
+    protected abstract execute(interaction: ChatInputCommandInteraction): Promise<void>;
     
     private async _checkPermission(interaction: ChatInputCommandInteraction, command: SlashCommand) {
         const memberPermissions = interaction.memberPermissions;

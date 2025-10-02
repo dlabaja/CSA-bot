@@ -17,7 +17,6 @@ import { MemberCardAdd } from "./add/member-card-add";
                 type: SlashCommandOptionType.STRING,
                 name: "pronouns",
                 description: "Your pronouns that will be used in the card (I cannot get this automatically)",
-                required: true
             }]
         },
         {
@@ -34,12 +33,12 @@ import { MemberCardAdd } from "./add/member-card-add";
     ]
 })
 export class MemberCard extends BaseSlashCommand {
-    async execute(interaction: ChatInputCommandInteraction, command: SlashCommand): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         switch (interaction.options.getSubcommand()) {
             case "view":
-                return await new MemberCardView().execute(interaction, command);
+                return await new MemberCardView().execute(interaction);
             case "add":
-                return await new MemberCardAdd().execute(interaction, command);
+                return await new MemberCardAdd().execute(interaction);
         }
     }
 }
