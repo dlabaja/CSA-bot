@@ -17,21 +17,25 @@ export abstract class BaseSlashCommand {
     
     private async _checkPermission(interaction: ChatInputCommandInteraction, command: SlashCommand) {
         const memberPermissions = interaction.memberPermissions;
-        const subcommandPermissions = command.getSubcommandPermissions();
+        const subcommandPermissions = command.subcommandPermissions;
         const commandPermissions = command.permissions;
-        
+        const subcommand = interaction.options.getSubcommand();
+
         if (!memberPermissions) {
             await interaction.reply("Cannot get permissions");
             return false;
         }
         
         try {
-            const subcommand = interaction.options.getSubcommand();
             if (subcommandPermissions[subcommand] && memberPermissions.has(subcommandPermissions[subcommand])) {
                 return true;
             }
         }
         catch {}
+        
+        if (!subcommandPermissions[subcommand] && !commandPermissions) {
+            return true;
+        }
         
         return !!(commandPermissions && memberPermissions.has(commandPermissions));
     }
