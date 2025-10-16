@@ -71,15 +71,23 @@ export class MemberCardView {
             fontWeight: fontWeight,
             color: color,
             x: 280,
-            y: 206 + yOffset
+            y: 185 + yOffset
         })
         regionRoles && img.addText({
-            text: regionRoles.map(x => x.name)[0],
+            text: regionRoles.map(x => x.name).slice(0, 1).filter(x => x != undefined).join("\n"),
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
             x: 280,
-            y: 270 + yOffset
+            y: 250 + yOffset
+        })
+        img.addText({
+            text: formatDateTime(data.date), // todo stranická role
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: color,
+            x: 280,
+            y: 345 + yOffset
         })
         img.addText({
             text: formatDateTime(data.date),
@@ -87,23 +95,23 @@ export class MemberCardView {
             fontWeight: fontWeight,
             color: color,
             x: 280,
-            y: 366 + yOffset
-        })
-        img.addText({
-            text: data.partyNumber.toString(),
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            color: color,
-            x: 280,
-            y: 432 + yOffset
+            y: 449 + yOffset
         })
         img.addText({
             text: interaction.options.get("pronouns")!.value!.toString() || "",
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
-            x: 615,
-            y: 206 + yOffset
+            x: 594,
+            y: 185 + yOffset
+        })
+        img.addText({
+            text: data.partyNumber.toString(),
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: color,
+            x: 594,
+            y: 249 + yOffset
         })
         approver && img.addText({
             text: approver.displayName || "",
@@ -112,8 +120,8 @@ export class MemberCardView {
             textAlign: TextAlign.CENTER,
             font: FontName.Pacifico,
             color: color,
-            x: 699,
-            y: 419 + yOffset + 25 - (approver.displayName.length * 2)
+            x: 696,
+            y: 403 + yOffset + 25 - (approver.displayName.length * 2)
         })
         await img.addImage({
             url: interaction.user.avatarURL() || interaction.user.defaultAvatarURL,

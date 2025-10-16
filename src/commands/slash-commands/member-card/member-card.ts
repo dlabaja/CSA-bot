@@ -2,9 +2,9 @@ import {ChatInputCommandInteraction, PermissionsBitField} from "discord.js";
 import {BaseSlashCommand} from "../base-slash-command";
 import {RegisterSlashCommand} from "../../../decorators/register-slash-command";
 import {SlashCommandOptionType} from "../../../enums/slash-command-option-type.enum";
-import {SlashCommand} from "../../../data/slash-command";
 import {MemberCardView} from "./view/member-card-view";
 import { MemberCardAdd } from "./add/member-card-add";
+
 @RegisterSlashCommand({
     name: "member-card",
     description: "Main member card command",
