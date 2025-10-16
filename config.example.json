@@ -1,5 +1,7 @@
 {
   "CLIENT_ID": "id vašeho bota, najdete na developer portálu",
   "TEST_GUILD_ID": "id serveru, na kterém budete testovat příkazy (nepovinné)",
-  "REGION_ROLE_IDS": ["číselné roleIds pro krajské role (olomoucký, pražský,...)"]
+  "REGION_ROLE_IDS": ["číselné roleIds pro krajské role (olomoucký, pražský,...)"],
+  "MEMBER_ROLE_IDS": ["role členů strany, od nejvyšší po nejnižší"],
+  "FACTIONS": ["Názvy stranických frakcí"]
 }

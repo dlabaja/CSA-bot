@@ -4,6 +4,7 @@ import {RegisterSlashCommand} from "../../../decorators/register-slash-command";
 import {SlashCommandOptionType} from "../../../enums/slash-command-option-type.enum";
 import {MemberCard} from "./card/member-card";
 import { MemberAdd } from "./add/member-add";
+import config from "../../../../config.json";
 
 @RegisterSlashCommand({
     name: "member",
@@ -17,6 +18,18 @@ import { MemberAdd } from "./add/member-add";
                 type: SlashCommandOptionType.STRING,
                 name: "pronouns",
                 description: "Your pronouns that will be used in the card (I cannot get this automatically)",
+            },
+            {
+                type: SlashCommandOptionType.STRING,
+                name: "faction",
+                description: "Faction you are part of",
+                choices: config.FACTIONS.map(a => {
+                    return {
+                        name: a,
+                        value: a
+                    }
+                }),
+                optional: true
             }]
         },
         {
@@ -32,6 +45,7 @@ import { MemberAdd } from "./add/member-add";
         },
     ]
 })
+
 export class Member extends BaseSlashCommand {
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         switch (interaction.options.getSubcommand()) {

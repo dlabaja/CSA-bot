@@ -33,8 +33,9 @@ export class MemberCard {
         await img.load(PathManager.getPath(__dirname, "./member-card.png"))
         
         const member = await interaction.guild?.members.fetch(interaction.user.id);
-        const approver = await interaction.guild?.members.fetch(data.approverUuid.toString())
-        const regionRoles = member?.roles.cache.filter(x => this._configurationManager.regionRoleIds.includes(Number(x.id)))
+        const approver = await interaction.guild?.members.fetch(data.approverUuid.toString());
+        const regionRoles = member?.roles.cache.filter(x => this._configurationManager.regionRoleIds.includes(Number(x.id)));
+        const memberRoles = member?.roles.cache.filter(x => this._configurationManager.memberRoleIds.includes(Number(x.id)));
         const color = "#363636";
         const fontWeight = FontWeight.SEMIBOLD;
         const fontSize = 24;
@@ -81,8 +82,8 @@ export class MemberCard {
             x: 280,
             y: 250 + yOffset
         })
-        img.addText({
-            text: formatDateTime(data.date), // todo stranická role
+        memberRoles && img.addText({
+            text: memberRoles.map(x => x.name)[0],
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
@@ -98,7 +99,7 @@ export class MemberCard {
             y: 449 + yOffset
         })
         img.addText({
-            text: interaction.options.get("pronouns")!.value!.toString() || "",
+            text: interaction.options.get("pronouns")?.value?.toString() || "",
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
@@ -112,6 +113,14 @@ export class MemberCard {
             color: color,
             x: 594,
             y: 249 + yOffset
+        })
+        img.addText({
+            text: interaction.options.get("faction")?.value?.toString() || "",
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: color,
+            x: 594,
+            y: 315 + yOffset
         })
         approver && img.addText({
             text: approver.displayName || "",

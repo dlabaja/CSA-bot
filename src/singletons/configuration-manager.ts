@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import {component} from "ironbean";
-import process from "node:process";
 import config from "../../config.json"
 
 @component
@@ -8,7 +7,9 @@ export class ConfigurationManager {
     private _token = "";
     private _clientId = "";
     private _testGuildId = "";
-    private _regionRoleIds: number[] = []
+    private _regionRoleIds: number[] = [];
+    private _memberRoleIds: number[] = [];
+    private _factions: string[] = [];
 
     public init() {
         dotenv.config({ quiet: true });
@@ -20,6 +21,8 @@ export class ConfigurationManager {
         this._clientId = config.CLIENT_ID || "";
         this._testGuildId = config.TEST_GUILD_ID || "";
         this._regionRoleIds = config.REGION_ROLE_IDS || [];
+        this._memberRoleIds = config.MEMBER_ROLE_IDS || [];
+        this._factions = config.FACTIONS || [];
     }
     
     get token(): string {
@@ -36,5 +39,13 @@ export class ConfigurationManager {
 
     get regionRoleIds(): number[] {
         return this._regionRoleIds;
+    }
+
+    get memberRoleIds(): number[] {
+        return this._memberRoleIds;
+    }
+
+    get factions(): string[] {
+        return this._factions;
     }
 }
