@@ -35,7 +35,6 @@ export class DecoratorManager {
                         })
                         import(sourceFile.getFilePath()).then(mod => {
                             const Cls = mod[className as keyof typeof mod];
-                            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                             Cls;
                         }).catch(console.error);
                     })

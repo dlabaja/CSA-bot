@@ -15,7 +15,7 @@ export class MemberCard {
         await interaction.deferReply();
         const partyMemberInfo = await this._partyMembersRepository.getPartyMember(BigInt(interaction.user.id));
         if (!partyMemberInfo) {
-            await interaction.editReply("Ještě nejsi členem strany. Někdo tě musí přidat příkazem **/member-card add**")
+            await interaction.editReply("You're currently not a party member. Ask someone to add you through **/member add**")
             return;
         }
         
@@ -23,7 +23,7 @@ export class MemberCard {
         const attachment = img.toAttachment("image/png", "member-card.png");
 
         await interaction.editReply({
-            content: "Tady máš svou kartu",
+            content: "Here's your card",
             files: [attachment]
         })
     }

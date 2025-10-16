@@ -45,7 +45,6 @@ import config from "../../../../config.json";
         },
     ]
 })
-
 export class Member extends BaseSlashCommand {
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         switch (interaction.options.getSubcommand()) {
