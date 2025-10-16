@@ -2,16 +2,16 @@ import {ChatInputCommandInteraction, PermissionsBitField} from "discord.js";
 import {BaseSlashCommand} from "../base-slash-command";
 import {RegisterSlashCommand} from "../../../decorators/register-slash-command";
 import {SlashCommandOptionType} from "../../../enums/slash-command-option-type.enum";
-import {MemberCardView} from "./view/member-card-view";
-import { MemberCardAdd } from "./add/member-card-add";
+import {MemberCard} from "./card/member-card";
+import { MemberAdd } from "./add/member-add";
 
 @RegisterSlashCommand({
-    name: "member-card",
-    description: "Main member card command",
+    name: "member",
+    description: "Main member command",
     options: [
         {
             type: SlashCommandOptionType.SUB_COMMAND,
-            name: "view",
+            name: "card",
             description: "View your member card",
             options: [{
                 type: SlashCommandOptionType.STRING,
@@ -32,13 +32,13 @@ import { MemberCardAdd } from "./add/member-card-add";
         },
     ]
 })
-export class MemberCard extends BaseSlashCommand {
+export class Member extends BaseSlashCommand {
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         switch (interaction.options.getSubcommand()) {
             case "view":
-                return await new MemberCardView().execute(interaction);
+                return await new MemberCard().execute(interaction);
             case "add":
-                return await new MemberCardAdd().execute(interaction);
+                return await new MemberAdd().execute(interaction);
         }
     }
 }

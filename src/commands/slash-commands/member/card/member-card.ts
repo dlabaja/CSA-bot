@@ -7,7 +7,7 @@ import {PathManager} from "../../../../singletons/path-manager";
 import {formatDateTime} from "../../../../utils/date-time";
 import {PartyMember} from "../../../../data/repository/party-member";
 
-export class MemberCardView {
+export class MemberCard {
     @autowired private _configurationManager: ConfigurationManager;
     @autowired private _partyMembersRepository: PartyMembersRepository;
     
