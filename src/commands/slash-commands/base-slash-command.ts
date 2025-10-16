@@ -19,24 +19,26 @@ export abstract class BaseSlashCommand {
         const memberPermissions = interaction.memberPermissions;
         const subcommandPermissions = command.subcommandPermissions;
         const commandPermissions = command.permissions;
-        const subcommand = interaction.options.getSubcommand();
+        const subcommand = interaction.options.getSubcommand(false);
 
         if (!memberPermissions) {
             await interaction.reply("Cannot get permissions");
             return false;
         }
         
-        try {
-            if (subcommandPermissions[subcommand] && memberPermissions.has(subcommandPermissions[subcommand])) {
+        if (subcommand) {
+            try {
+                if (subcommandPermissions[subcommand] && memberPermissions.has(subcommandPermissions[subcommand])) {
+                    return true;
+                }
+            }
+            catch {}
+
+            if (!subcommandPermissions[subcommand] && !commandPermissions) {
                 return true;
             }
         }
-        catch {}
         
-        if (!subcommandPermissions[subcommand] && !commandPermissions) {
-            return true;
-        }
-        
-        return !!(commandPermissions && memberPermissions.has(commandPermissions));
+        return commandPermissions ? memberPermissions.has(commandPermissions) : true;
     }
 }

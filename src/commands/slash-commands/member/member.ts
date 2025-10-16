@@ -35,10 +35,12 @@ import { MemberAdd } from "./add/member-add";
 export class Member extends BaseSlashCommand {
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         switch (interaction.options.getSubcommand()) {
-            case "view":
+            case "card":
                 return await new MemberCard().execute(interaction);
             case "add":
                 return await new MemberAdd().execute(interaction);
+            default:
+                await interaction.reply("Subcommand not found")
         }
     }
 }
