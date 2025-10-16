@@ -39,6 +39,8 @@ export interface IImage {
     w?: number;
     h?: number;
     centerX?: boolean;
+    maxWidth?: number;
+    maxHeight?: number;
 }
 
 registerFont(PathManager.getPath(__dirname, "./fonts/Pacifico-Regular.ttf"), { family: "Pacifico" });
@@ -65,22 +67,27 @@ export class ImageBuilder {
     }
     
     public async addImage(args: IImage): Promise<void> {
-        const {url, w, h, y, x, centerX} = args;
+        const {url, w, h, y, x, centerX, maxWidth, maxHeight} = args;
         const image = await loadImage(url.endsWith(".png") ? url : await this._convertToPng(url));
         if (w && h) {
-            const _x = centerX ? x - (w / 2) : x;
-            return this._ctx.drawImage(image, _x, y, w, h);
+            const _w = Math.min(w, maxWidth || w)
+            const _h = Math.min(h, maxHeight || h)
+            const _x = centerX ? x - (_w / 2) : x;
+            return this._ctx.drawImage(image, _x, y, _w, _h);
         }
         else if (w) {
-            const scale = w / image.width;
-            const _x = centerX ? x - (w / 2) : x;
-            return this._ctx.drawImage(image, _x, y, w, image.height * scale);
+            const _w = Math.min(w, maxWidth || w)
+            const scale = _w / image.width;
+            const _h = Math.min(image.height * scale, maxHeight || image.height * scale)
+            const _x = centerX ? x - (_w / 2) : x;
+            return this._ctx.drawImage(image, _x, y, _w, _h);
         }
         else if (h) {
-            const scale = h / image.height;
-            const _w = image.width * scale;
+            const _h = Math.min(h, maxHeight || h)
+            const scale = _h / image.height;
+            const _w = Math.min(image.width * scale, maxWidth || image.width * scale);
             const _x = centerX ? x - (_w / 2) : x;
-            return this._ctx.drawImage(image, _x, y, _w, h);
+            return this._ctx.drawImage(image, _x, y, _w, _h);
         }
         const _x = centerX ? x - (image.width / 2) : x;
         this._ctx.drawImage(image, _x, y);

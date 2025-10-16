@@ -35,6 +35,7 @@ export class ImageGift {
             x: 370,
             y: 312,
             h: 300,
+            maxWidth: 500,
             centerX: true
         });
 
