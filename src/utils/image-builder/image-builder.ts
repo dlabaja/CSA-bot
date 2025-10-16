@@ -32,24 +32,14 @@ export interface IText {
     y: number;
 }
 
-export interface IFixedSizeImage {
-    w: number;
-    h: number;
-}
-
-export interface IDynamicSizeImage {
-    w?: never;
-    h?: never;
-}
-
-export interface IImageBase {
+export interface IImage {
     url: string;
     x: number;
     y: number;
-    maxWidth?: number;
+    w?: number;
+    h?: number;
+    centerX?: boolean;
 }
-
-export type IImage = IImageBase & (IFixedSizeImage | IDynamicSizeImage);
 
 registerFont(PathManager.getPath(__dirname, "./fonts/Pacifico-Regular.ttf"), { family: "Pacifico" });
 
@@ -74,21 +64,26 @@ export class ImageBuilder {
         this._ctx.fillText(text, x, y)
     }
     
-    public async addImage(args: IImage) {
-        const {url, w, h, y, x, maxWidth} = args;
-        const image = await loadImage(url.endsWith(".png") ? url : await this._convertToPng(url))
-        if (maxWidth) {
-            const scale = Math.min(1, maxWidth / image.width);
-            const width = image.width * scale;
-            const height = image.height * scale;
-            this._ctx.drawImage(image, x, y, width, height);
-            return;
+    public async addImage(args: IImage): Promise<void> {
+        const {url, w, h, y, x, centerX} = args;
+        const image = await loadImage(url.endsWith(".png") ? url : await this._convertToPng(url));
+        if (w && h) {
+            const _x = centerX ? x - (w / 2) : x;
+            return this._ctx.drawImage(image, _x, y, w, h);
         }
-        else if (!w || !h) {
-            this._ctx.drawImage(image, x, y);
-            return;
+        else if (w) {
+            const scale = w / image.width;
+            const _x = centerX ? x - (w / 2) : x;
+            return this._ctx.drawImage(image, _x, y, w, image.height * scale);
         }
-        this._ctx.drawImage(image, x, y, w, h);
+        else if (h) {
+            const scale = h / image.height;
+            const _w = image.width * scale;
+            const _x = centerX ? x - (_w / 2) : x;
+            return this._ctx.drawImage(image, _x, y, _w, h);
+        }
+        const _x = centerX ? x - (image.width / 2) : x;
+        this._ctx.drawImage(image, _x, y);
     }
     
     public toBuffer(mimeType: MimeType) {

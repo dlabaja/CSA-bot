@@ -32,9 +32,10 @@ export class ImageGift {
         
         await img.addImage({
             url: url.toString(),
-            x: 140,
-            y: 339,
-            maxWidth: 500
+            x: 370,
+            y: 312,
+            h: 300,
+            centerX: true
         });
 
         return img;
