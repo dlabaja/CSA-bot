@@ -32,13 +32,24 @@ export interface IText {
     y: number;
 }
 
-export interface IImage {
-    url: string;
+export interface IFixedSizeImage {
     w: number;
     h: number;
+}
+
+export interface IDynamicSizeImage {
+    w?: never;
+    h?: never;
+}
+
+export interface IImageBase {
+    url: string;
     x: number;
     y: number;
+    maxWidth?: number;
 }
+
+export type IImage = IImageBase & (IFixedSizeImage | IDynamicSizeImage);
 
 registerFont(PathManager.getPath(__dirname, "./fonts/Pacifico-Regular.ttf"), { family: "Pacifico" });
 
@@ -64,8 +75,19 @@ export class ImageBuilder {
     }
     
     public async addImage(args: IImage) {
-        const {url, w, h, y, x} = args;
+        const {url, w, h, y, x, maxWidth} = args;
         const image = await loadImage(url.endsWith(".png") ? url : await this._convertToPng(url))
+        if (maxWidth) {
+            const scale = Math.min(1, maxWidth / image.width);
+            const width = image.width * scale;
+            const height = image.height * scale;
+            this._ctx.drawImage(image, x, y, width, height);
+            return;
+        }
+        else if (!w || !h) {
+            this._ctx.drawImage(image, x, y);
+            return;
+        }
         this._ctx.drawImage(image, x, y, w, h);
     }
     
