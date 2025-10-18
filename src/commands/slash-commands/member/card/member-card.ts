@@ -6,6 +6,7 @@ import {FontName, FontWeight, ImageBuilder, TextAlign} from "../../../../utils/i
 import {PathManager} from "../../../../singletons/path-manager";
 import {formatDateTime} from "../../../../utils/date-time";
 import {PartyMember} from "../../../../data/repository/party-member";
+import {Symbols} from "../../../../enums/symbols.enum";
 
 export class MemberCard {
     @autowired private _configurationManager: ConfigurationManager;
@@ -75,7 +76,7 @@ export class MemberCard {
             y: 185 + yOffset
         })
         regionRoles && img.addText({
-            text: regionRoles.map(x => x.name).slice(0, 1).filter(x => x != undefined).join("\n"),
+            text: regionRoles.map(x => x.name).slice(0, 1).filter(x => x != undefined).join("\n") || Symbols.LONG_SLASH,
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
@@ -83,7 +84,7 @@ export class MemberCard {
             y: 250 + yOffset
         })
         memberRoles && img.addText({
-            text: memberRoles.map(x => x.name)[0],
+            text: memberRoles.map(x => x.name).slice(0, 1).filter(x => x != undefined).join("\n") || Symbols.LONG_SLASH,
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
@@ -99,7 +100,7 @@ export class MemberCard {
             y: 449 + yOffset
         })
         img.addText({
-            text: interaction.options.get("pronouns")?.value?.toString() || "",
+            text: interaction.options.get("pronouns")?.value?.toString() || Symbols.LONG_SLASH,
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
@@ -115,7 +116,7 @@ export class MemberCard {
             y: 249 + yOffset
         })
         img.addText({
-            text: interaction.options.get("faction")?.value?.toString() || "",
+            text: interaction.options.get("faction")?.value?.toString() || Symbols.LONG_SLASH,
             fontSize: fontSize,
             fontWeight: fontWeight,
             color: color,
